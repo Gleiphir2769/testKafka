@@ -9,15 +9,15 @@ import (
 
 func main() {
 	// to produce messages
-	topic := "fuck-kop"
+	topic := "topicname"
 	partition := 0
 
-	conn, err := kafka.DialLeader(context.Background(), "tcp", "10.105.59.152:9092", topic, partition)
+	conn, err := kafka.DialLeader(context.Background(), "tcp", "10.105.59.130:9092", topic, partition)
 	if err != nil {
 		log.Fatal("failed to dial leader:", err)
 	}
 
-	conn.SetWriteDeadline(time.Now().Add(10*time.Second))
+	conn.SetWriteDeadline(time.Now().Add(10 * time.Second))
 	_, err = conn.WriteMessages(
 		kafka.Message{Value: []byte("one!")},
 		kafka.Message{Value: []byte("two!")},
@@ -31,4 +31,3 @@ func main() {
 		log.Fatal("failed to close writer:", err)
 	}
 }
-
