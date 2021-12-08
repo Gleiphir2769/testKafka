@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/spf13/viper"
+	"log"
 	"sync"
 )
 
@@ -17,6 +18,10 @@ type config struct {
 
 func LoadConfig() *config {
 	once.Do(func() {
+		err := initViper()
+		if err != nil {
+			log.Fatal("viper init fail: ", err)
+		}
 		Config = &config{
 			IpPort:       viper.GetString("ip_port"),
 			TopicName:    viper.GetString("topic_name"),
@@ -25,4 +30,16 @@ func LoadConfig() *config {
 		}
 	})
 	return Config
+}
+
+func initViper() error {
+	viper.AddConfigPath(".")
+	viper.SetConfigName("config")
+
+	viper.SetConfigType("yaml")
+
+	if err := viper.ReadInConfig(); err != nil {
+		return err
+	}
+	return nil
 }
