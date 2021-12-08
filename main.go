@@ -9,10 +9,9 @@ import (
 
 func main() {
 	// to produce messages
-	topic := "topicname"
-	partition := 0
+	LoadConfig()
 
-	conn, err := kafka.DialLeader(context.Background(), "tcp", "10.105.59.130:9092", topic, partition)
+	conn, err := kafka.DialLeader(context.Background(), "tcp", Config.IpPort, Config.TopicName, Config.Partitions)
 	if err != nil {
 		log.Fatal("failed to dial leader:", err)
 	}

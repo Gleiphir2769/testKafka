@@ -1,0 +1,4 @@
+ip_port: 10.110.96.104
+topic_name: test
+partitions: 1
+replications: 1
